@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grade 5 English - Unit 2: Then and Now</title>
+<style>
+body{font:17px Arial,sans-serif;max-width:760px;margin:auto;padding:16px;background:#f0f5ff;color:#20304a}
+header{background:#2458a6;color:white;padding:20px;border-radius:15px;text-align:center}
+nav{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0}
+button{padding:11px;border:0;border-radius:8px;background:#2458a6;color:white;cursor:pointer;margin:4px}
+.card{background:white;padding:16px;border-radius:12px;margin:12px 0;border:1px solid #d8e2f2}
+.option{display:block;width:100%;text-align:left;background:#edf3ff;color:#20304a;border:1px solid #cbd8ed}
+input,textarea{width:95%;padding:10px;margin:7px 0;border:1px solid #aabbd4;border-radius:7px;font:inherit}
+.good{color:green;font-weight:bold}.bad{color:#b42318;font-weight:bold}
+</style>
+</head>
+<body>
+<header><h1>Then and Now</h1><p>Grade 5 English · Unit 2</p><p>Learn · Practise · Check</p></header>
+<nav id="nav"></nav>
+<main id="app"></main>
+<p>Free educational resource. You may reuse and adapt this code under the MIT License.</p>
+<script>
+const sections=[
+["Vocabulary",`
+<h2>1. Vocabulary</h2>
+<div class="card"><b>Technology</b><p>computer · keyboard · mouse · tablet · email · letter · telephone · mobile phone · CD player</p><b>Actions</b><p>carry · call · study · post a letter · send an email · make a face · tell a story · hold a pen · win a race · make a sandwich · tie a shoelace</p></div>
+<div class="card"><p>What do you use to type on a computer?</p>${q("v1",["Mouse","Keyboard","Tablet"],1)}</div>
+<div class="card"><p>Which phrase means putting a letter in the post?</p>${q("v2",["Send an email","Post a letter","Tell a story"],1)}</div>
+<div class="card"><p>Complete: I can _____ a sandwich.</p>${q("v3",["make","win","hold"],0)}</div>`],
+["Past simple",`
+<h2>2. Grammar: Past simple</h2>
+<div class="card"><p><b>Positive:</b> We had a telephone.</p><p><b>Negative:</b> We didn't have a tablet.</p><p><b>Question:</b> Did you have a computer?</p><p><b>Short answers:</b> Yes, I did. / No, I didn't.</p><p>Remember: use the base verb after didn't.</p><p>have → had · write → wrote · send → sent · call → called · visit → visited</p></div>
+<div class="card"><p>Grandad _____ a telephone.</p>${q("p1",["has","had","have"],1)}</div>
+<div class="card"><p>We _____ have a tablet ten years ago.</p>${q("p2",["don't","didn't","doesn't"],1)}</div>
+<div class="card"><p>Choose the correct question.</p>${q("p3",["Did you had a phone?","Did you have a phone?","Do you had a phone?"],1)}</div>`],
+["Could / couldn't",`
+<h2>3. Grammar: Could and couldn't</h2>
+<div class="card"><p>Use <b>could</b> for past ability and <b>couldn't</b> for past inability.</p><p>When I was five, I could ride a bicycle.</p><p>When I was one, I couldn't write.</p><p>Could you talk when you were two? Yes, I could. / No, I couldn't.</p></div>
+<div class="card"><p>When Ali was a baby, he _____ write.</p>${q("c1",["could","couldn't","doesn't"],1)}</div>
+<div class="card"><p>Choose the correct sentence.</p>${q("c2",["I could swam.","I could swim.","I could to swim."],1)}</div>
+<div class="card"><label>One thing I could do:</label><input id="could1" placeholder="When I was five, I could..."><label>One thing I couldn't do:</label><input id="could2" placeholder="When I was five, I couldn't..."><button onclick="save('could1','could2','cf')">Check my sentences</button><p id="cf"></p></div>`],
+["Reading",`
+<h2>4. Reading: A science blog</h2>
+<div class="card"><h3>Technology: Then and Now</h3><p>In the past, families often had a telephone in the house. They wrote letters to friends and posted them. Some families had a computer, but many children did not have tablets or mobile phones. Children played outside and told stories.</p><p>Today, children can study on computers and tablets. They can send emails and call friends on mobile phones. Technology has changed, but spending time with family and friends is still important.</p></div>
+<div class="card"><p>What did people post to their friends?</p>${q("r1",["Letters","Tablets","Keyboards"],0)}</div>
+<div class="card"><p>What can children use to study today?</p>${q("r2",["Only letters","Computers and tablets","Only CD players"],1)}</div>
+<div class="card"><label>Why is time with family important?</label><textarea id="readanswer"></textarea><button onclick="saveOne('readanswer','rf')">Save answer</button><p id="rf"></p></div>`],
+["Listening",`
+<h2>5. Listening</h2>
+<div class="card"><p>Listen to the passage. Replay it if needed.</p><button onclick="listen()">▶ Play listening</button><button onclick="document.getElementById('script').hidden=!document.getElementById('script').hidden">Show / hide script</button><p id="script" hidden>When my grandfather was young, he had a telephone at home. He didn't have a mobile phone or a computer. He could write letters, but he couldn't send emails. Today, he uses a mobile phone to talk to his family.</p></div>
+<div class="card"><p>What did Grandfather have at home?</p>${q("l1",["A telephone","A tablet","A CD player"],0)}</div>
+<div class="card"><p>What couldn't he do?</p>${q("l2",["Send emails","Write letters","Talk to family"],0)}</div>`],
+["Speaking",`
+<h2>6. Speaking: Interview a partner</h2>
+<div class="card"><p>Ask and answer with a partner.</p><p><b>Did you have a tablet when you were five?</b></p><p>Yes, I did. / No, I didn't.</p><p><b>Could you ride a bicycle when you were five?</b></p><p>Yes, I could. / No, I couldn't.</p><p><b>What did you do yesterday?</b></p><p>I played with my friends.</p><label>Write your partner's answer:</label><textarea id="speakanswer"></textarea><button onclick="saveOne('speakanswer','sf')">Finish interview</button><p id="sf"></p></div>`],
+["Writing",`
+<h2>7. Writing: A report</h2>
+<div class="card"><p>Write a short report comparing life then and now.</p><label>Title</label><input id="wt" value="Life Then and Now"><label>Technology in the past</label><textarea id="wthen" placeholder="People had... but they didn't have..."></textarea><label>Activities in the past</label><textarea id="wpast" placeholder="Children could... but they couldn't..."></textarea><label>Technology today</label><textarea id="wnow" placeholder="Today, people use..."></textarea><label>Conclusion</label><textarea id="wend" placeholder="I think..."></textarea><button onclick="report()">Build my report</button><div class="card" id="reportout"></div></div>
+<div class="card"><h3>Model report</h3><p>Life was different in the past. Many families had a telephone at home, but they didn't have mobile phones. Children could play outside, but they couldn't send emails. Today, people use computers, tablets and mobile phones. Technology has changed a lot over the years.</p></div>`],
+["Museums",`
+<h2>8. Museums</h2>
+<div class="card"><p>Useful language:</p><p>“I'd like some information about this museum, please.”</p><p>“What can I see here?”</p><p>“You can see old objects and learn about the past.”</p><p>“This museum is interesting because...”</p></div>
+<div class="card"><label>Museum name</label><input id="mn" placeholder="Technology Museum"><label>What can visitors see?</label><input id="ms" placeholder="old computers..."><label>What can visitors learn?</label><input id="ml" placeholder="about technology..."><button onclick="museum()">Create description</button><p id="mo"></p></div>`],
+["Final quiz",`
+<h2>9. Final review</h2>
+<div class="card"><p>My grandmother _____ letters.</p>${q("f1",["write","wrote","writes"],1)}</div>
+<div class="card"><p>When I was one, I _____ walk.</p>${q("f2",["could","couldn't","can"],1)}</div>
+<div class="card"><p>Choose the correct sentence.</p>${q("f3",["We didn't had a tablet.","We didn't have a tablet.","We don't had a tablet."],1)}</div>
+<div class="card"><p>Which word ends with /id/?</p>${q("f4",["walked","visited","called"],1)}</div>
+<div class="card"><p>Choose the polite museum request.</p>${q("f5",["Tell me now!","I'd like some information about this museum, please.","Give museum."],1)}</div>
+<div class="card"><button onclick="alert('Keep practising the sections where you made mistakes!')">Finish review</button></div>`]
+];
+function q(id,opts,answer){return `<div id="${id}">${opts.map((o,i)=>`<button class="option" onclick="answer('${id}',${i},${answer})">${String.fromCharCode(65+i)}. ${o}</button>`).join("")}<p id="${id}fb"></p></div>`}
+const done=new Set();let points=0;
+function answer(id,choice,right){const f=document.getElementById(id+"fb");if(done.has(id))return;if(choice===right){done.add(id);points++;f.textContent="Correct! Well done.";f.className="good";document.querySelectorAll("#"+id+" button").forEach(b=>b.disabled=true)}else{f.textContent="Try again.";f.className="bad"}}
+function save(a,b,feedback){if(!document.getElementById(a).value.trim()||!document.getElementById(b).value.trim()){document.getElementById(feedback).textContent="Write both sentences first.";return}document.getElementById(feedback).textContent="Good work! Check your grammar."}
+function saveOne(a,feedback){document.getElementById(feedback).textContent=document.getElementById(a).value.trim()?"Answer saved. Check your spelling and punctuation.":"Write an answer first."}
+function report(){let ids=["wt","wthen","wpast","wnow","wend"];let v=ids.map(id=>document.getElementById(id).value.trim());if(v.slice(1).some(x=>!x)){document.getElementById("reportout").textContent="Complete each section first.";return}document.getElementById("reportout").innerHTML="<h3>"+esc(v[0])+"</h3>"+v.slice(1).map(x=>"<p>"+esc(x)+"</p>").join("")}
+function museum(){let n=document.getElementById("mn").value,s=document.getElementById("ms").value,l=document.getElementById("ml").value;document.getElementById("mo").textContent=n&&s&&l?n+". Visitors can see "+s+". They can learn about "+l+".":"Complete all boxes first."}
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function listen(){if(!("speechSynthesis"in window)){alert("Please read the listening script aloud.");return}let u=new SpeechSynthesisUtterance("When my grandfather was young, he had a telephone at home. He didn't have a mobile phone or a computer. He could write letters, but he couldn't send emails. Today, he uses a mobile phone to talk to his family.");u.lang="en-GB";speechSynthesis.speak(u)}
+const nav=document.getElementById("nav"),app=document.getElementById("app");
+sections.forEach((s,i)=>{let b=document.createElement("button");b.textContent=s[0];b.onclick=()=>{app.innerHTML=s[1];};nav.appendChild(b)});
+app.innerHTML=sections[0][1];
+</script>
+</body>
+</html>
